@@ -1,4 +1,36 @@
+
 <html>
-	<h1> This is JARED "THE CANNON" CANONIGO TEMPLATE. YOU BEST BELIEVE IT SON. </h1>
-		<p> i wonder if this works </p>:
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<style>
+button{
+	position: absolute;
+}
+</style>
+	</head>
+	<body>
+		<h1> How's my driving? 888-888-8888</h1>
+		<button id="btn">TOUCH ME </button>
+		<div id="counterdiv"></div>
+	
+
+	
+	<script>
+		var count = 0;
+		$('button').on('click', function() {
+			  $(this).animate({
+				      'top': Math.random() * window.innerHeight + "px",
+				      'left': Math.random() * window.innerWidth + "px"
+				    }, "medium");
+		});
+
+		$('#btn').bind('click',function(){
+			count = count + 1;
+			$('#counterdiv').html('<h3>Clicks = ' + count + '</h3>');
+			
+		});
+		
+	</script>
+	</body>
 </html>
+
