@@ -55,7 +55,9 @@ def get_time():
                                 "serverTime":str(datetime.datetime.now())
                             }
                 )
-
+@app.route ('/jared') #endpoint
+def jared():
+    return render_template('jaredtemplate.html')
 
 app.run(host='0.0.0.0', port=80)
 
