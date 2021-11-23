@@ -7,13 +7,25 @@ from tools.logging import logger
 def handle_request():
     logger.debug("Login Handle Request")
     #use data here to auth the user
-
-    password_from_user_form = request.form['password']
+    
     user = {
-            "sub" : request.form['firstname'] #sub is used by pyJwt as the owner of the token
+            "sub" : request.form['username'] #sub is used by pyJwt as the owner of the token
             }
-    if not user:
+    
+    cur = g.db.cursor()
+    cur.execute(sql.SQL("SELECT password FROM users WHERE username = %s;"), (user['sub'],))
+    pw = cur.fetchone() 
+    cur.close()
+     
+    if pw == None:
+        logger.debug('User doesnt exist')
+        return json_response(status_=401, message = 'bad credentials', authenticated =  False )
+        
+        
+    if not bcrypt.checkpw( bytes(request.form.get('password'), 'utf-8'), str.encode(pw[0])):
+        logger.debug('Invalid password')
         return json_response(status_=401, message = 'Invalid credentials', authenticated =  False )
+ 
 
     return json_response( token = create_token(user) , authenticated = True)
 
